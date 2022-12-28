@@ -4,7 +4,7 @@ let currDay = date.getDay();
 let currMonth = date.getMonth();
 let currYear = date.getFullYear();
 
-let tableDays = document.querySelector(".table .days");
+let tableDays = document.querySelector(".table > .days");
 let activeDays = document.querySelector(".table .days div");
 let prev = document.querySelectorAll(".next span");
 let selectCurrDay  = document.querySelector(".curr-day");
@@ -58,13 +58,6 @@ const isLeapYear = (year)   => {
 document.querySelector("#ngayduong").innerHTML = date.getDate(); // Todays
 
 const renderCalendar = () => {
-
-    document.querySelector(".thangduong h2").innerHTML = `${
-    months[currMonth]
-    } năm ${currYear}`;
-
-    document.getElementById("thuduong").innerHTML = `<u> ${
-        crrdays[date.getDay()]}</u>`;
     
     date.setDate(1);
 
@@ -79,37 +72,12 @@ const renderCalendar = () => {
     };
 
     for (let i = 1; i <= lastDay; i++) {
-        if (i === new Date().getDate() && currMonth === new Date().getMonth()) {
+        if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
             days += `<div class="today" value=${i}>${i}</div>`;
         } else {
             days += `<div value=${i}>${i}</div>`;
         }
         tableDays.innerHTML = days;
-    };
-
-    let list1 = selectCurrMonth;
-    while (list1.hasChildNodes()) {
-        list1.removeChild(list1.firstChild);
-    }
-
-    for(let i = 1; i <= 12; i++) {
-        let option = document.createElement("option");
-        option.value = i;
-        option.text = i;
-        option.onclick = onClMonth;
-        selectCurrMonth.appendChild(option);
-    };
-
-    let list2 = selectCurrDay;
-    while (list2.hasChildNodes()) {
-        list2.removeChild(list2.firstChild);
-    }
-    
-    for (let i = 1; i <= arrD; i++){
-        let option = document.createElement("option");
-        option.value = i;
-        option.text = i;
-        selectCurrDay.appendChild(option);
     };
 
     const myActive = document.querySelectorAll(".days div");
@@ -119,13 +87,63 @@ const renderCalendar = () => {
             this.classList.add("today");
         });
     });
+
+    renderRank();
+    renderDays();
+    renderMonth();
 };
+
+const renderRank = () => {
+  document.querySelector(".thangduong h2").innerHTML = `${
+    months[date.getMonth()]
+    } năm ${date.getFullYear()}`;
+
+    document.getElementById("thuduong").innerHTML = `<u> ${
+        crrdays[date.getDay()]}</u>`;
+};
+
+const  renderMonth = () => {
+  let list1 = selectCurrMonth;
+
+  while (list1.hasChildNodes()) {
+      list1.removeChild(list1.firstChild);
+  }
+
+  for(let i = 1; i <= 12; i++) {
+      let option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      option.onclick = onClMonth;
+      selectCurrMonth.appendChild(option);
+  };
+}
+
+
+const renderDays = () => {
+  let list2 = selectCurrDay;
+  while (list2.hasChildNodes()) {
+      list2.removeChild(list2.firstChild);
+  }
+  
+  for (let i = 1; i <= arrD; i++){
+      let option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      selectCurrDay.appendChild(option);
+  };
+}
 
 const onClMonth = (op) => {
     var op = document.querySelector(".curr-Month");
     var value = op.value;
     var text = op.options[op.selectedIndex].text;
+    return text
 }
+
+document.querySelector(".curr-Month").addEventListener('change', function (e) {
+  arrD = onClMonth(e) == "2" && isLeapYear(date.getFullYear()) ? 29 : arrDays[this.value-1];
+  renderDays()
+});
 
 const thang = document.querySelector("#thangnam");
 // Click change
@@ -144,31 +162,26 @@ const activeDay = (event) => {
 
 // Previous Month
 document.querySelector(".previous").addEventListener("click", () => {
-  date.setMonth(currMonth - 1);
+  date.setMonth(date.getMonth() - 1);
   renderCalendar();
 });
 
 //Next Month
 document.querySelector(".next-").addEventListener("click", () => {
-  date.setMonth(currMonth + 1);
+  date.setMonth(date.getMonth() + 1);
   renderCalendar();
 });
 
 // Previous Year
 document.querySelector(".previousdouble").addEventListener("click", () => {
-  date.setFullYear(currYear - 1);
+  date.setFullYear(date.getFullYear() - 1);
   renderCalendar();
 });
 
 // Next Year
 document.querySelector(".nextdouble").addEventListener("click", () => {
-  date.setFullYear(currYear + 1);
+  date.setFullYear(date.getFullYear() + 1);
   renderCalendar();
-});
-
-document.querySelector(".curr-Month").addEventListener('change', function () {
-    arrD = arrDays[this.value-1];
-    renderCalendar();
 });
 
 renderCalendar();
