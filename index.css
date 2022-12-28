@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: tahoma;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: tomato;
+}
+.main{
+    margin: 30px;
+    padding: 5px;
+    width: 500px;
+    min-height: 450px;
+    border: 1px solid black;
+    background-color: bisque;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 2px 3px rgb(0, 0, 0.4);
+}
+.thangduong{
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    background-color: #8bf58b;
+}
+.ngayduong{
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    font-weight: bold;
+}
+.date-am{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.date-am .thangam, .ngayam{
+    width: 50%;
+    float: left;
+    text-align: center;
+    font-size: 13px;
+}
+.thangam .ngay-am{margin: 0 !important;font-weight: 500;font-size: 30px;}
+.hoangdao{font-size: 12px;margin: 10px 0;}
+.table .weekdays{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(104,0,0);
+    border-radius: 5px;
+    color: #fff;
+    text-shadow: 0 2px rgb(0,0,0,0.4);
+}
+.table .weekdays div{
+    font-weight: 500;
+    width: calc(30.2rem/7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.table .days{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    padding: o.2rem;
+}
+.table .days div{
+    margin: 0.3rem;
+    width: calc(25.2rem/7);
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 1px rgb(0,0,0.4);
+    border: 1px solid transparent;
+    
+}
+.table .days div:hover:not(.today){
+    background-color: #262626;
+    color: #fff;
+    cursor: pointer;
+
+}
+.inative{color: rgb(131, 131, 131);}
+.today{border: 1px solid rgb(0, 0, 0.4) !important; color: red;}
+.next{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.next .previous, .next-{
+    text-decoration: none;
+    font-size: 30px;
+    margin-top: -10px;
+    cursor: pointer;
+    padding: 0 10px;
+}
+.next .previousdouble, .nextdouble{cursor: pointer;}
+input[type="reset"]{
+    margin: 0 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main">
+        <div class="thangduong">
+            <h2 id="thangnam"></h2>
+        </div>
+        <div class="ngayduong">
+            <h1 class="ngay-duong" id="ngayduong"></h1>
+            <p class="thu-duong" id="thuduong"></p>
+        </div>
+        <div class="date-am">
+            <div class="thangam">
+                <p>Tháng Một (T)</p>
+                <p class="ngay-am">29</p>
+                <p>Năm Nhâm Dần</p>
+            </div>
+            <div class="ngayam">
+                <p>Tháng Nhâm Tý</p>
+                <p>Ngày Kỷ Dậu <br/> Giờ Giáp Tý</p>
+                <p>Tiết Đông chí</p>
+            </div>
+        </div>
+        <div class="hoangdao">
+            <p>Giờ hoàng đạo: Tý (23-1), Dần (3-5), Mão (5-7), Ngọ (11-13), Mùi (13-15), Dậu (17-19)</p>
+        </div>
+        <div class="table">
+            <div class="weekdays">
+                <div>Chủ nhật</div>
+                <div>Thứ 2</div>
+                <div>Thứ 3</div>
+                <div>Thứ 4</div>
+                <div>Thứ 5</div>
+                <div>Thứ 6</div>
+                <div>Thứ 7</div>
+            </div>
+            <div class="days" onclick="activeDay(event)"></div>
+        </div>
+        <div class="next" id="next">
+            <span class="previousdouble">&#8810;</span>
+            <span class="previous" id="prev">&#8249;</span>
+            <span><select class="curr-day">
+            </select>/ <select class="curr-Month"></select>
+            / <input class="nam" type="munber" value="2022" style="width:40px;">
+            <button type="submit" onclick="myClick()">change</button></span>
+            <span class="next-">&#8250;</span>
+            <span class="nextdouble">&#8811;</span>
+        </div>
+    </div>
+
+    <script src="./main.js"></script>
+</body>
+</html>
