@@ -1,14 +1,18 @@
 let date = new Date();
 
-let currDay = date.getDay();
-let currMonth = date.getMonth();
-let currYear = date.getFullYear();
+let [currDay, currMonth, currYear] = [
+  date.getDay(),
+  date.getMonth(),
+  date.getFullYear(),
+];
 
-let tableDays = document.querySelector(".table > .days");
-let activeDays = document.querySelector(".table .days div");
-let prev = document.querySelectorAll(".next span");
-let selectCurrDay  = document.querySelector(".curr-day");
-let selectCurrMonth  = document.querySelector(".curr-Month");
+const [tableDays, activeDays, prev, selectCurrDay, selectCurrMonth] = [
+  document.querySelector(".table > .days"),
+  document.querySelector(".table .days div"),
+  document.querySelectorAll(".next span"),
+  document.querySelector(".curr-day"),
+  document.querySelector(".curr-Month"),
+];
 
 const months = [
   "Tháng 1",
@@ -57,49 +61,58 @@ const isLeapYear = (year)   => {
 
 document.querySelector("#ngayduong").innerHTML = date.getDate(); // Todays
 
-const renderCalendar = () => {
-    
-    date.setDate(1);
+const renderCalendar = (day = new Date().getDate(), month = new Date().getMonth(), year = new Date().getFullYear()) => {
+  document.querySelectorAll(".days div").forEach((item) => {
+    item.remove();
+  });
+   
+  console.log(day);
+  console.log(month);
+  console.log(year);
 
-    const firstDayIndex = date.getDay();
-    const lastDay = currMonth == 1 && isLeapYear(currMonth) ? 29 : new Date(currMonth, currMonth + 1, 0).getDate();
-    const nextDay = new Date(currMonth, currMonth, 0).getDate();
+  // const firstDayIndex = date.getDay();
+  // const lastDay = currMonth == 2 && isLeapYear(currMonth) ? 29 :arrDays[currMonth - 1];
+  // const nextDay = new Date(currMonth, currMonth, 0).getDate();
 
-    let days = "";
+  const [firstDayIndex, lastDay, nextDay] = [
+    date.getDay(),
+    currMonth == 2 && isLeapYear(currMonth) ? 29 :arrDays[currMonth - 1],
+    new Date(currMonth, currMonth, 0).getDate(),
+  ];
 
-    for (let i = firstDayIndex; i > 0; i--) {
-        days += `<div class="inative">${nextDay - i + 1}</div>`; // Pay he date of the previous month
-    };
+  let days = "";
 
-    for (let i = 1; i <= lastDay; i++) {
-        if (i === new Date().getDate() && date.getMonth() === new Date().getMonth()) {
-            days += `<div class="today" value=${i}>${i}</div>`;
-        } else {
-            days += `<div value=${i}>${i}</div>`;
-        }
-        tableDays.innerHTML = days;
-    };
+  for (let i = firstDayIndex; i > 0; i--) {
+      days += `<div class="inative">${nextDay - i + 1}</div>`; // Pay he date of the previous month
+  };
 
-    const myActive = document.querySelectorAll(".days div");
-    myActive.forEach((activeOfDay) => {
-        activeOfDay.addEventListener("click", function () {
-            myActive.forEach((btn) => btn.classList.remove("today"));
-            this.classList.add("today");
-        });
-    });
+  for (let i = 1; i <= lastDay; i++) {
+      if (i == day*1) {
+          days += `<div class="today" value=${i}>${i}</div>`;
+      } else {
+          days += `<div value=${i}>${i}</div>`;
+      }
+      tableDays.innerHTML = days;
+  };
 
-    renderRank();
-    renderDays();
-    renderMonth();
-};
+  const myActive = document.querySelectorAll(".days div")
 
-const renderRank = () => {
+  myActive.forEach((activeOfDay) => {
+      activeOfDay.addEventListener("click", function () {
+          myActive.forEach((btn) => btn.classList.remove("today"));
+          this.classList.add("today");
+      });
+  });
+
   document.querySelector(".thangduong h2").innerHTML = `${
-    months[date.getMonth()]
-    } năm ${date.getFullYear()}`;
+    months[currMonth]
+    } năm ${currYear}`;
 
     document.getElementById("thuduong").innerHTML = `<u> ${
         crrdays[date.getDay()]}</u>`;
+
+  renderDays();
+  renderMonth();
 };
 
 const  renderMonth = () => {
@@ -119,14 +132,16 @@ const  renderMonth = () => {
 }
 
 
-const renderDays = () => {
+const renderDays = (validDate) => {
+  const getDate = document.querySelector(".curr-day").value;
   let list2 = selectCurrDay;
   while (list2.hasChildNodes()) {
       list2.removeChild(list2.firstChild);
   }
-  
+
   for (let i = 1; i <= arrD; i++){
       let option = document.createElement("option");
+      if(validDate && getDate == i ) option.selected = true;
       option.value = i;
       option.text = i;
       selectCurrDay.appendChild(option);
@@ -141,11 +156,14 @@ const onClMonth = (op) => {
 }
 
 document.querySelector(".curr-Month").addEventListener('change', function (e) {
+ 
   arrD = onClMonth(e) == "2" && isLeapYear(date.getFullYear()) ? 29 : arrDays[this.value-1];
-  renderDays()
+  renderDays(arrD >= arrDays[this.value-1])
+  // console.log(arrD);
+  
 });
 
-const thang = document.querySelector("#thangnam");
+const thang = document.querySelector(".thangduong > h2");
 // Click change
 const myClick = () => {
   currDay = document.querySelector(".curr-day").value;
@@ -153,6 +171,7 @@ const myClick = () => {
   currYear = document.querySelector(".nam").value;
   document.querySelector(".ngay-duong").innerHTML = currDay;
   thang.innerHTML = `Tháng ${currMonth} năm ${currYear}`;
+  renderCalendar(currDay, currMonth, currYear);
 };
 
 const activeDay = (event) => {
